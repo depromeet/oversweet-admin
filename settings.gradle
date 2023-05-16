@@ -1,0 +1,5 @@
+rootProject.name = 'admin'
+include 'admin-api'
+include 'admin-core'
+include 'admin-core'
+

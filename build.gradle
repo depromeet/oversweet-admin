@@ -1,0 +1,42 @@
+plugins {
+	id 'org.springframework.boot' version '3.0.6' apply false
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE' apply false
+	id 'java-library'
+}
+
+def javaProjects = [
+		project(':admin-api'),
+		project(':admin-core')
+];
+
+configure(javaProjects) {
+	apply plugin: 'java-library'
+	apply plugin: 'org.springframework.boot'
+	apply plugin: 'io.spring.dependency-management'
+
+	group = 'com.depromeet'
+	version = '0.0.1-SNAPSHOT'
+	sourceCompatibility = '17'
+
+	configurations {
+		compileOnly {
+			extendsFrom annotationProcessor
+		}
+	}
+
+	repositories {
+		maven { url 'https://jitpack.io' }
+		mavenCentral()
+	}
+
+	dependencies {
+		implementation 'org.jetbrains:annotations:20.1.0'
+		compileOnly 'org.projectlombok:lombok'
+		annotationProcessor 'org.projectlombok:lombok'
+	}
+
+	tasks.named('test') {
+		useJUnitPlatform()
+	}
+}
+
