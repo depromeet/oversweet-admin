@@ -35,7 +35,7 @@ jobs:
             docker push depromeet2/admin:latest
 
       - name: Get timestamp
-        uses: gerred/actions/current-time@main
+        uses: gerred/actions/current-time@master
         id: current-time
 
       - name: Run string replace
