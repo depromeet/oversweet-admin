@@ -1,9 +1,9 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3307/juckdang?useSSL=false&allowPublicKeyRetrieval=true&useUnicode=true&serverTimezone=Asia/Seoul
-    username: root
-    password: root
+    url: ${url}
+    username: ${username}
+    password: ${password}
   jpa:
     hibernate:
       ddl-auto: none

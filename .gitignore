@@ -36,3 +36,6 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### Prod Database ###
+./admin-api/src/main/resources/application-prod.yml
