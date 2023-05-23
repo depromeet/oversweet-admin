@@ -27,41 +27,34 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew build
 
-  Dockerize:
-    - needs: build-gradle
-    - runs-on: ubuntu-latest
-    - steps:
-        - name: Docker build
-          run: |
-            docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
-            docker build -t admin .
-            docker tag admin depromeet2/admin:latest
-            docker push depromeet2/admin:latest
+      - name: Docker build
+        run: |
+          docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
+          docker build -t admin .
+          docker tag admin depromeet2/admin:latest
+          docker push depromeet2/admin:latest
 
-        - name: Get timestamp
-          uses: gerred/actions/current-time@master
-          id: current-time
+      - name: Get timestamp
+        uses: gerred/actions/current-time@master
+        id: current-time
 
-        - name: Run string replace
-          uses: frabert/replace-string-action@master
-          id: format-time
-          with:
-            pattern: '[:\.]+'
-            string: "${{ steps.current-time.outputs.time }}"
-            replace-with: '-'
-            flags: 'g'
+      - name: Run string replace
+        uses: frabert/replace-string-action@master
+        id: format-time
+        with:
+          pattern: '[:\.]+'
+          string: "${{ steps.current-time.outputs.time }}"
+          replace-with: '-'
+          flags: 'g'
 
-  BeanStalk Deploy:
-      - needs: Dockerize
-      - runs-on: ubuntu-latest
-      - steps:
-          - name: Beanstalk Deploy
-            uses: einaregilsson/beanstalk-deploy@v20
-            with:
-              aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
-              aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-              application_name: oversweet-admin
-              environment_name: Oversweet-admin-env
-              version_label: "github-action--${{ steps.format-time.outputs.replaced }}"
-              region: ap-northeast-2
-              deployment_package: Dockerrun.aws.json
+      # Beanstalk Deploy 플러그인 사용
+      - name: Beanstalk Deploy
+        uses: einaregilsson/beanstalk-deploy@v20
+        with:
+          aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          application_name: oversweet-admin
+          environment_name: Oversweet-admin-env
+          version_label: "github-action--${{ steps.format-time.outputs.replaced }}"
+          region: ap-northeast-2
+          deployment_package: Dockerrun.aws.json
