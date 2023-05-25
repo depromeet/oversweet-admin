@@ -6,7 +6,8 @@ plugins {
 
 def javaProjects = [
 		project(':admin-api'),
-		project(':admin-core')
+		project(':admin-core'),
+		project(':admin-common')
 ];
 
 configure(javaProjects) {
