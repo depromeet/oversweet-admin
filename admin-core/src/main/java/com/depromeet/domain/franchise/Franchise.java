@@ -9,8 +9,11 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.util.Objects;
 
 
 @Entity
@@ -29,4 +32,15 @@ public class Franchise extends AuditingTimeEntity {
 
     @Column(name = "image_url")
     private String imageUrl;
+
+    @Builder
+    public Franchise(final Long id, final String name, final String imageUrl){
+        this.id = id;
+        this.name = name;
+        this.imageUrl = imageUrl;
+    }
+
+    public boolean isSameName(final String name) {
+        return Objects.equals(this.name, name);
+    }
 }
