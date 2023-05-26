@@ -15,7 +15,7 @@ public class FranchiseService {
     private final FranchiseRepository franchiseRepository;
 
     @Transactional
-    public void saverFranchise(final CreateFranchiseRequest request){
+    public void saveFranchise(final CreateFranchiseRequest request){
         validateDuplicatedFranchiseName(request.getName());
         final Franchise franchise = request.toFranchise();
         franchiseRepository.save(franchise);

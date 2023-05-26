@@ -11,14 +11,11 @@ import org.mockito.Mock;
 import org.mockito.exceptions.misusing.FriendlyReminderException;
 import org.mockito.junit.jupiter.MockitoSettings;
 
-import java.util.Optional;
-
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
-import static org.mockito.BDDMockito.will;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 
@@ -42,7 +39,7 @@ class FranchiseServiceTest {
         given(franchiseRepository.save(any())).willReturn(franchise);
 
         // when
-        franchiseService.saverFranchise(createFranchiseRequest);
+        franchiseService.saveFranchise(createFranchiseRequest);
 
         // then
         then(franchiseRepository)
@@ -59,7 +56,7 @@ class FranchiseServiceTest {
         given(franchiseRepository.findByName(createFranchiseRequest.getName())).willThrow(FriendlyReminderException.class);
 
         // when
-        assertThatThrownBy(() -> franchiseService.saverFranchise(createFranchiseRequest))
+        assertThatThrownBy(() -> franchiseService.saveFranchise(createFranchiseRequest))
                 .isInstanceOf(FriendlyReminderException.class);
 
         then(franchiseRepository)

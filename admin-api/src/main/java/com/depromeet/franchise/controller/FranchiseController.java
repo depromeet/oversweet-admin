@@ -29,7 +29,7 @@ public class FranchiseController {
     })
     @PostMapping
     public ResponseEntity<ApiCommonResponse<Void>> franchiseSave(@RequestBody final CreateFranchiseRequest request) {
-        franchiseService.saverFranchise(request);
+        franchiseService.saveFranchise(request);
         return ResponseEntity.ok()
                 .body(ApiCommonResponse.of(HttpStatus.OK, "프랜차이즈 저장 성공", null));
     }
