@@ -1,4 +1,4 @@
-package com.depromeet.common.exception.common;
+package com.depromeet.common.exception;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

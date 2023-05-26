@@ -1,4 +1,4 @@
-package com.depromeet.common.exception.common;
+package com.depromeet.common.exception;
 
 import com.depromeet.common.exception.http.InternalServerErrorException;
 

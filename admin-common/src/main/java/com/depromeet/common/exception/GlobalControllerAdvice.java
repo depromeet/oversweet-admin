@@ -1,8 +1,6 @@
 package com.depromeet.common.exception;
 
 
-import com.depromeet.common.exception.common.ErrorResponse;
-import com.depromeet.common.exception.common.ErrorType;
 import com.depromeet.common.exception.http.InternalServerErrorException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
