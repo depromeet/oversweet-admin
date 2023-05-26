@@ -1,6 +1,5 @@
 package com.depromeet.common.exception;
 
-import com.depromeet.common.exception.common.ErrorType;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
