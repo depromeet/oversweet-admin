@@ -1,7 +1,8 @@
-package com.depromeet.common.exception;
+package com.depromeet.common.exception.common;
 
 
-import com.depromeet.common.exception.common.UndefinedException;
+import com.depromeet.common.exception.ExternalException;
+import com.depromeet.common.exception.OversweetException;
 import com.depromeet.franchise.exception.FranchiseAlreadyExistException;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
