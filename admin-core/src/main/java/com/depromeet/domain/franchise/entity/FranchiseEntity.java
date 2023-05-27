@@ -41,6 +41,10 @@ public class FranchiseEntity extends AuditingTimeEntity {
         this.imageUrl = imageUrl;
     }
 
+    public void modifyImageUrl(final String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
     public boolean isSameName(final String name) {
         return Objects.equals(this.name, name);
     }

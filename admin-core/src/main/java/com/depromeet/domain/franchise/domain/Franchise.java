@@ -1,6 +1,6 @@
 package com.depromeet.domain.franchise.domain;
 
-import com.depromeet.common.exception.franchise.FranchiseAlreadyExistException;
+import com.depromeet.common.exception.franchise.FranchiseImageUrlDuplicateException;
 import com.depromeet.domain.drink.Drink;
 import com.depromeet.domain.franchise.entity.FranchiseEntity;
 import lombok.AccessLevel;
@@ -27,6 +27,17 @@ public class Franchise {
         this.id = id;
         this.name = name;
         this.imageUrl = imageUrl;
+    }
+
+    public void modifyImageUrl(final String imageUrl) {
+        validateImageUrl(imageUrl);
+        this.imageUrl = imageUrl;
+    }
+
+    private void validateImageUrl(String imageUrl) {
+        if (Objects.equals(this.imageUrl, imageUrl)) {
+            throw new FranchiseImageUrlDuplicateException();
+        }
     }
 
     public boolean isSameName(final String name) {
