@@ -17,7 +17,7 @@ import java.util.Objects;
 public enum ErrorType {
     F001("F001", "이미 존재 하는 프랜차이즈입니다.", FranchiseAlreadyExistException.class),
     F002("F002", "존재 하지 않는 프랜차이즈입니다.", FranchiseNotFoundException.class),
-    F003("F003", "프랜차이즈 이미지 수정은 불가합니다.", FranchiseImageUrlDuplicateException.class),
+    F003("F003", "이미 같은 프랜차이즈 이미지 URL입니다.", FranchiseImageUrlDuplicateException.class),
 
     NOTUSED_EXCEPTION("X001", "정의되지 않은 에러", UndefinedException.class)
     ;
