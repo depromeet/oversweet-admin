@@ -16,7 +16,7 @@ import java.util.Objects;
 @AllArgsConstructor
 public enum ErrorType {
     DUPLICATE_EXCEPTION("F001", "이미 존재 하는 프랜차이즈입니다.", FranchiseAlreadyExistException.class),
-    NOTFOUND_FRANCHISE("F003", "존재 하지 않는 프랜차이즈입니다.", FranchiseNotFoundException.class),
+    NOTFOUND_FRANCHISE("F002", "존재 하지 않는 프랜차이즈입니다.", FranchiseNotFoundException.class),
     NOTUSED_EXCEPTION("X001", "정의되지 않은 에러", UndefinedException.class)
     ;
 
