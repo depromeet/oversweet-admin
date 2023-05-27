@@ -1,7 +1,8 @@
-package com.depromeet.domain.franchise;
+package com.depromeet.domain.franchise.entity;
 
 
 import com.depromeet.domain.common.AuditingTimeEntity;
+import com.depromeet.domain.franchise.domain.Franchise;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -20,7 +21,7 @@ import java.util.Objects;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "franchise")
-public class Franchise extends AuditingTimeEntity {
+public class FranchiseEntity extends AuditingTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,7 +35,7 @@ public class Franchise extends AuditingTimeEntity {
     private String imageUrl;
 
     @Builder
-    public Franchise(final Long id, final String name, final String imageUrl){
+    public FranchiseEntity(final Long id, final String name, final String imageUrl){
         this.id = id;
         this.name = name;
         this.imageUrl = imageUrl;
@@ -42,5 +43,13 @@ public class Franchise extends AuditingTimeEntity {
 
     public boolean isSameName(final String name) {
         return Objects.equals(this.name, name);
+    }
+
+    public static Franchise toDomain(final FranchiseEntity franchiseEntity){
+        return Franchise.builder()
+                .id(franchiseEntity.id)
+                .name(franchiseEntity.name)
+                .imageUrl(franchiseEntity.imageUrl)
+                .build();
     }
 }

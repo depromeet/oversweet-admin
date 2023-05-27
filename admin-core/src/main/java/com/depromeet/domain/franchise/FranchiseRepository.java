@@ -1,9 +1,10 @@
 package com.depromeet.domain.franchise;
 
-import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.Optional;
+import com.depromeet.domain.franchise.domain.Franchise;
+import com.depromeet.domain.franchise.domain.Franchises;
 
-public interface FranchiseRepository extends JpaRepository<Franchise, Long> {
-    Optional<Franchise> findByName(String name);
+public interface FranchiseRepository {
+    Franchises findAll ();
+    void save(Franchise franchise);
 }
