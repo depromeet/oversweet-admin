@@ -1,8 +1,8 @@
 package com.depromeet.franchise.service;
 
+import com.depromeet.common.exception.franchise.FranchiseAlreadyExistException;
 import com.depromeet.domain.franchise.FranchiseRepository;
 import com.depromeet.domain.franchise.domain.Franchise;
-import com.depromeet.domain.franchise.domain.Franchises;
 import com.depromeet.franchise.dto.request.CreateFranchiseRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,9 +16,7 @@ public class FranchiseService {
 
     @Transactional
     public void saveFranchise(final CreateFranchiseRequest request) {
-        final Franchises franchises = franchiseRepository.findAll();
-
-        franchises.checkFranchiseDuplicate(request.name());
+        validateDuplicatedFranchiseName(request.name());
 
         final Franchise franchise = Franchise.builder()
                 .name(request.name())
@@ -28,4 +26,13 @@ public class FranchiseService {
         franchiseRepository.save(franchise);
     }
 
+    private void validateDuplicatedFranchiseName(final String name){
+        franchiseRepository.findByName(name).ifPresent(
+                findFranchise -> {
+                    if (findFranchise.isSameName(name)) {
+                        throw new FranchiseAlreadyExistException();
+                    }
+                }
+        );
+    }
 }
