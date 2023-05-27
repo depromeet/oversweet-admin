@@ -1,7 +1,7 @@
 package com.depromeet.domain.drink;
 
 import com.depromeet.domain.common.AuditingTimeEntity;
-import com.depromeet.domain.franchise.Franchise;
+import com.depromeet.domain.franchise.entity.FranchiseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -33,7 +33,7 @@ public class Drink extends AuditingTimeEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "franchise_id", foreignKey = @ForeignKey(name = "FK_DRINK_FRANCHISE"), nullable = false)
-    private Franchise franchise;
+    private FranchiseEntity franchiseEntity;
 
     @Column(name = "size", nullable = false)
     private int size;

@@ -2,6 +2,7 @@ package com.depromeet.common.exception;
 
 
 import com.depromeet.common.exception.franchise.FranchiseAlreadyExistException;
+import com.depromeet.common.exception.franchise.FranchiseNotFoundException;
 import com.depromeet.common.exception.http.ConflictException;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,9 +16,9 @@ import java.util.Objects;
 @AllArgsConstructor
 public enum ErrorType {
     DUPLICATE_EXCEPTION("F001", "이미 존재 하는 프랜차이즈입니다.", FranchiseAlreadyExistException.class),
+    NOTFOUND_FRANCHISE("F002", "존재 하지 않는 프랜차이즈입니다.", FranchiseNotFoundException.class),
     NOTUSED_EXCEPTION("X001", "정의되지 않은 에러", UndefinedException.class)
     ;
-
 
     private final String code;
     private final String message;
