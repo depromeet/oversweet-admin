@@ -10,7 +10,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.exceptions.misusing.FriendlyReminderException;
 import org.mockito.junit.jupiter.MockitoSettings;
-
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
@@ -53,7 +52,7 @@ class FranchiseServiceTest {
         // given
         CreateFranchiseRequest createFranchiseRequest = franchiseRequest();
 
-        given(franchiseRepository.findByName(createFranchiseRequest.getName())).willThrow(FriendlyReminderException.class);
+        given(franchiseRepository.findByName(createFranchiseRequest.name())).willThrow(FriendlyReminderException.class);
 
         // when
         assertThatThrownBy(() -> franchiseService.saveFranchise(createFranchiseRequest))
@@ -61,19 +60,20 @@ class FranchiseServiceTest {
 
         then(franchiseRepository)
                 .should(times(1))
-                .findByName(createFranchiseRequest.getName());
+                .findByName(createFranchiseRequest.name());
         then(franchiseRepository)
                 .should(never())
                 .findById(anyLong());
     }
 
-    private CreateFranchiseRequest franchiseRequest(){
+    private CreateFranchiseRequest franchiseRequest() {
         return CreateFranchiseRequest.builder()
                 .name("test")
                 .imageUrl("test")
                 .build();
     }
-    private Franchise franchise(long id){
+
+    private Franchise franchise(long id) {
         return Franchise.builder()
                 .id(id)
                 .name("test")
