@@ -11,7 +11,7 @@ public interface FranchiseRepository {
     void save(Franchise franchise);
     Optional<Franchise> findByName(String name);
 
-    Franchise findById(long id);
+    Franchise findById(Long id);
 
     void updateImage(Franchise franchise);
 }

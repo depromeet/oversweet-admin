@@ -2,7 +2,7 @@ package com.depromeet.franchise.service;
 
 
 import com.depromeet.common.exception.franchise.FranchiseAlreadyExistException;
-import com.depromeet.common.exception.franchise.FranchiseImageUrlDuplicateException;
+import com.depromeet.common.exception.franchise.FranchiseImageUrlUpdateNotAllowedException;
 import com.depromeet.domain.franchise.FranchiseRepository;
 import com.depromeet.domain.franchise.domain.Franchise;
 import com.depromeet.franchise.dto.request.CreateFranchiseRequest;
@@ -99,7 +99,7 @@ class FranchiseEntityServiceTest {
 
         // when
         assertThatThrownBy(() -> franchiseService.modifyFranchiseImage(1L, request))
-                .isInstanceOf(FranchiseImageUrlDuplicateException.class);
+                .isInstanceOf(FranchiseImageUrlUpdateNotAllowedException.class);
 
         // then
         assertThat(franchise.getImageUrl()).isEqualTo(request.imageUrl());
@@ -111,7 +111,7 @@ class FranchiseEntityServiceTest {
 
     private ModifyFranchiseImageRequest modifyFranchiseImageUrlRequest() {
         return ModifyFranchiseImageRequest.builder()
-                .imageUrl("test1")
+                .imageUrl("https://oversweet.s3/test")
                 .build();
     }
     private ModifyFranchiseImageRequest modifyFranchiseImageUrlBadRequest() {

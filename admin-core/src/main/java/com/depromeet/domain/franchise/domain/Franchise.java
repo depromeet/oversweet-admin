@@ -1,6 +1,6 @@
 package com.depromeet.domain.franchise.domain;
 
-import com.depromeet.common.exception.franchise.FranchiseImageUrlDuplicateException;
+import com.depromeet.common.exception.franchise.FranchiseImageUrlUpdateNotAllowedException;
 import com.depromeet.domain.drink.Drink;
 import com.depromeet.domain.franchise.entity.FranchiseEntity;
 import lombok.AccessLevel;
@@ -9,7 +9,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
-import java.util.Objects;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -35,19 +34,16 @@ public class Franchise {
     }
 
     private void validateImageUrl(String imageUrl) {
-        if (Objects.equals(this.imageUrl, imageUrl)) {
-            throw new FranchiseImageUrlDuplicateException();
+        if (!imageUrl.startsWith("https://oversweet.s3")) {
+            throw new FranchiseImageUrlUpdateNotAllowedException();
         }
     }
 
-    public boolean isSameName(final String name) {
-        return  Objects.equals(this.name, name);
-    }
 
-    public static FranchiseEntity toEntity(final Franchise franchise){
+    public FranchiseEntity toEntity(){
         return FranchiseEntity.builder()
-                .name(franchise.name)
-                .imageUrl(franchise.imageUrl)
+                .name(this.name)
+                .imageUrl(this.imageUrl)
                 .build();
     }
 }

@@ -27,7 +27,7 @@ public class FranchiseRepositoryImpl implements FranchiseRepository {
 
     @Override
     public void save(final Franchise franchise) {
-        final var franchiseEntity = Franchise.toEntity(franchise);
+        final var franchiseEntity = franchise.toEntity();
         franchiseEntityRepository.save(franchiseEntity);
     }
 
@@ -38,10 +38,10 @@ public class FranchiseRepositoryImpl implements FranchiseRepository {
     }
 
     @Override
-    public Franchise findById(final long id) {
+    public Franchise findById(final Long id) {
         final var findFranchiseEntity = franchiseEntityRepository.findById(id)
                  .orElseThrow(FranchiseNotFoundException::new);
-        return FranchiseEntity.toDomain(findFranchiseEntity);
+        return findFranchiseEntity.toDomain();
     }
 
     @Override
