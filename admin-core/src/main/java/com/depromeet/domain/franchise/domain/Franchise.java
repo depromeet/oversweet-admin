@@ -39,7 +39,6 @@ public class Franchise {
         }
     }
 
-
     public FranchiseEntity toEntity(){
         return FranchiseEntity.builder()
                 .name(this.name)
