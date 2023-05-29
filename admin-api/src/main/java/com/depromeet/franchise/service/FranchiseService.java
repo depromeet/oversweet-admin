@@ -5,7 +5,7 @@ import com.depromeet.domain.franchise.FranchiseRepository;
 import com.depromeet.domain.franchise.domain.Franchise;
 import com.depromeet.franchise.dto.request.CreateFranchiseRequest;
 import com.depromeet.franchise.dto.request.ModifyFranchiseImageRequest;
-import com.depromeet.franchise.dto.response.FranchiseResponseModel;
+import com.depromeet.franchise.dto.response.FranchiseResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -38,11 +38,11 @@ public class FranchiseService {
     }
 
     @Transactional(readOnly = true)
-    public List<FranchiseResponseModel> findAllFranchise() {
+    public List<FranchiseResponse> findAllFranchise() {
         final List<Franchise> findFranchises = franchiseRepository.findAll();
 
         return findFranchises.stream()
-                .map(franchise -> FranchiseResponseModel.builder()
+                .map(franchise -> FranchiseResponse.builder()
                         .id(franchise.getId())
                         .name(franchise.getName())
                         .ImageUrl(franchise.getImageUrl())

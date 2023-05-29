@@ -5,7 +5,7 @@ import com.depromeet.common.response.ApiCommonResponse;
 import com.depromeet.common.response.ApiMessageResponse;
 import com.depromeet.franchise.dto.request.CreateFranchiseRequest;
 import com.depromeet.franchise.dto.request.ModifyFranchiseImageRequest;
-import com.depromeet.franchise.dto.response.FranchiseResponseModel;
+import com.depromeet.franchise.dto.response.FranchiseResponse;
 import com.depromeet.franchise.service.FranchiseService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -59,8 +59,8 @@ public class FranchiseController {
     @Operation(summary = "프랜차이즈 전체 목록 조회", description = "프랜차이즈 전체 목록 조회 API입니다.")
     @ApiResponses(@ApiResponse(responseCode = "200", description = "성공적으로 프랜차이즈 목록을 조회했습니다."))
     @GetMapping
-    public ResponseEntity<ApiCommonResponse<List<FranchiseResponseModel>>> franchises(){
-        final List<FranchiseResponseModel> franchises = franchiseService.findAllFranchise();
+    public ResponseEntity<ApiCommonResponse<List<FranchiseResponse>>> franchises(){
+        final var franchises = franchiseService.findAllFranchise();
         return ResponseEntity.ok()
                 .body(ApiCommonResponse.of(HttpStatus.OK, "프랜차이즈 전체 목록 조회 성공", franchises));
     }
