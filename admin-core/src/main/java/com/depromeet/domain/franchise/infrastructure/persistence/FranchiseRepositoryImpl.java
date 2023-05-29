@@ -1,5 +1,6 @@
 package com.depromeet.domain.franchise.infrastructure.persistence;
 
+import com.depromeet.common.exception.franchise.FranchiseNotFoundException;
 import com.depromeet.domain.franchise.entity.FranchiseEntity;
 import com.depromeet.domain.franchise.entity.FranchiseEntityRepository;
 import com.depromeet.domain.franchise.FranchiseRepository;
@@ -17,7 +18,7 @@ public class FranchiseRepositoryImpl implements FranchiseRepository {
 
     @Override
     public List<Franchise> findAll() {
-        final List<FranchiseEntity> franchiseEntities = franchiseEntityRepository.findAll();
+        final var franchiseEntities = franchiseEntityRepository.findAll();
 
         return franchiseEntities.stream()
                 .map(FranchiseEntity::toDomain)
@@ -26,19 +27,27 @@ public class FranchiseRepositoryImpl implements FranchiseRepository {
 
     @Override
     public void save(final Franchise franchise) {
-        final FranchiseEntity franchiseEntity = Franchise.toEntity(franchise);
+        final var franchiseEntity = franchise.toEntity();
         franchiseEntityRepository.save(franchiseEntity);
     }
 
     @Override
     public Optional<Franchise> findByName(final String name) {
-        final Optional<FranchiseEntity> findFranchiseEntity = franchiseEntityRepository.findByName(name);
+        final var findFranchiseEntity = franchiseEntityRepository.findByName(name);
         return findFranchiseEntity.map(FranchiseEntity::toDomain);
     }
 
     @Override
-    public Optional<Franchise> findById(long id) {
-        final Optional<FranchiseEntity> findFranchiseEntity = franchiseEntityRepository.findById(id);
-        return findFranchiseEntity.map(FranchiseEntity::toDomain);
+    public Franchise findById(final Long id) {
+        final var findFranchiseEntity = franchiseEntityRepository.findById(id)
+                 .orElseThrow(FranchiseNotFoundException::new);
+        return findFranchiseEntity.toDomain();
+    }
+
+    @Override
+    public void updateImage(final Franchise franchise) {
+        final var findFranchiseEntity = franchiseEntityRepository.findById(franchise.getId())
+                .orElseThrow(FranchiseNotFoundException::new);
+        findFranchiseEntity.modifyImageUrl(franchise.getImageUrl());
     }
 }

@@ -41,15 +41,19 @@ public class FranchiseEntity extends AuditingTimeEntity {
         this.imageUrl = imageUrl;
     }
 
+    public void modifyImageUrl(final String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
     public boolean isSameName(final String name) {
         return Objects.equals(this.name, name);
     }
 
-    public static Franchise toDomain(final FranchiseEntity franchiseEntity){
+    public Franchise toDomain(){
         return Franchise.builder()
-                .id(franchiseEntity.id)
-                .name(franchiseEntity.name)
-                .imageUrl(franchiseEntity.imageUrl)
+                .id(this.id)
+                .name(this.name)
+                .imageUrl(this.imageUrl)
                 .build();
     }
 }
