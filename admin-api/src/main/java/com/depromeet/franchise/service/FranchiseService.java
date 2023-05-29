@@ -5,11 +5,12 @@ import com.depromeet.domain.franchise.FranchiseRepository;
 import com.depromeet.domain.franchise.domain.Franchise;
 import com.depromeet.franchise.dto.request.CreateFranchiseRequest;
 import com.depromeet.franchise.dto.request.ModifyFranchiseImageRequest;
+import com.depromeet.franchise.dto.response.FranchiseResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -34,6 +35,19 @@ public class FranchiseService {
         final var franchise = franchiseRepository.findById(id);
         franchise.modifyImageUrl(request.imageUrl());
         franchiseRepository.updateImage(franchise);
+    }
+
+    @Transactional(readOnly = true)
+    public List<FranchiseResponse> findAllFranchise() {
+        final List<Franchise> findFranchises = franchiseRepository.findAll();
+
+        return findFranchises.stream()
+                .map(franchise -> FranchiseResponse.builder()
+                        .id(franchise.getId())
+                        .name(franchise.getName())
+                        .ImageUrl(franchise.getImageUrl())
+                        .build())
+                .toList();
     }
 
     private void validateDuplicatedFranchiseName(final String name) {

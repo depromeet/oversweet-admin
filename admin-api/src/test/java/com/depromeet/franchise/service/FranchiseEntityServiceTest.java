@@ -14,6 +14,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoSettings;
 
+import java.util.Arrays;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -38,8 +39,8 @@ class FranchiseEntityServiceTest {
     @DisplayName("프랜차이즈 - 성공")
     void saveFranchise() {
         // given
-        CreateFranchiseRequest request = createFranchiseRequest();
-        Franchise franchise = franchise(1L);
+        var request = createFranchiseRequest();
+        var franchise = franchise(1L);
         Mockito.doNothing().when(franchiseRepository).save(Mockito.any(Franchise.class));
 
         // when
@@ -55,8 +56,8 @@ class FranchiseEntityServiceTest {
     @Test
     @DisplayName("프랜차이즈 - 중복으로 인한 실패")
     void saveFranchiseFailedWhenDuplicateFranchiseName() {
-        CreateFranchiseRequest request = createFranchiseRequest();
-        Franchise testFranchise = toDomain(request);
+        var request = createFranchiseRequest();
+        var testFranchise = toDomain(request);
 
         given(franchiseRepository.findByName(request.name())).willReturn(Optional.of(testFranchise));
 
@@ -72,8 +73,8 @@ class FranchiseEntityServiceTest {
     @DisplayName("프랜차이즈 이미지 Url 수정 - 성공")
     void modifyFranchiseImageUrl() {
         // given
-        ModifyFranchiseImageRequest request = modifyFranchiseImageUrlRequest();
-        Franchise franchise = franchise(1L);
+        var request = modifyFranchiseImageUrlRequest();
+        var franchise = franchise(1L);
 
         given(franchiseRepository.findById(1L)).willReturn((franchise));
 
@@ -92,8 +93,8 @@ class FranchiseEntityServiceTest {
     @DisplayName("프랜차이즈 이미지 Url 수정 - 실패 (이미 같은 이미지 url)")
     void modifyFranchiseImageUrlWhenUrlIsForbidden() {
         // given
-        ModifyFranchiseImageRequest request = modifyFranchiseImageUrlBadRequest();
-        Franchise franchise = franchise(1L);
+        var request = modifyFranchiseImageUrlBadRequest();
+        var franchise = franchise(1L);
 
         given(franchiseRepository.findById(1L)).willReturn((franchise));
 
@@ -109,11 +110,32 @@ class FranchiseEntityServiceTest {
                 .updateImage(any());
     }
 
+    @Test
+    @DisplayName("프랜차이즈 전체 목록 조회 - 성공")
+    void finaAllFranchise() {
+        // given
+        var firstFranchise = franchise(1L);
+        var secondeFranchise = franchise(2L);
+        var thirdFranchise = franchise(3L);
+        var franchises = Arrays.asList(firstFranchise, secondeFranchise, thirdFranchise);
+
+
+        Mockito.when(franchiseRepository.findAll()).thenReturn(franchises);
+
+        // when
+        var findFranchises = franchiseService.findAllFranchise();
+
+        // then
+        assertThat(findFranchises.size() == 3);
+        assertThat(findFranchises.isEmpty()).isFalse();
+    }
+
     private ModifyFranchiseImageRequest modifyFranchiseImageUrlRequest() {
         return ModifyFranchiseImageRequest.builder()
                 .imageUrl("https://oversweet.s3/test")
                 .build();
     }
+
     private ModifyFranchiseImageRequest modifyFranchiseImageUrlBadRequest() {
         return ModifyFranchiseImageRequest.builder()
                 .imageUrl("test2")
@@ -133,7 +155,8 @@ class FranchiseEntityServiceTest {
                 .imageUrl("test")
                 .build();
     }
-    private Franchise franchise(long id) {
+
+    private Franchise franchise(Long id) {
         return Franchise.builder()
                 .id(id)
                 .name("test2")
