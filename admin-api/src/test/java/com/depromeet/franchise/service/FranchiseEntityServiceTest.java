@@ -156,7 +156,7 @@ class FranchiseEntityServiceTest {
                 .build();
     }
 
-    private Franchise franchise(long id) {
+    private Franchise franchise(Long id) {
         return Franchise.builder()
                 .id(id)
                 .name("test2")
