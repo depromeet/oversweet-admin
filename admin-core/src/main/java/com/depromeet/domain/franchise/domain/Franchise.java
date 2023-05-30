@@ -1,8 +1,7 @@
 package com.depromeet.domain.franchise.domain;
 
 import com.depromeet.common.exception.franchise.FranchiseImageUrlUpdateNotAllowedException;
-import com.depromeet.domain.drink.Drink;
-import com.depromeet.domain.franchise.entity.FranchiseEntity;
+import com.depromeet.domain.drink.domain.Drink;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -33,16 +32,9 @@ public class Franchise {
         this.imageUrl = imageUrl;
     }
 
-    private void validateImageUrl(String imageUrl) {
+    private void validateImageUrl(final String imageUrl) {
         if (!imageUrl.startsWith("https://oversweet.s3")) {
             throw new FranchiseImageUrlUpdateNotAllowedException();
         }
-    }
-
-    public FranchiseEntity toEntity(){
-        return FranchiseEntity.builder()
-                .name(this.name)
-                .imageUrl(this.imageUrl)
-                .build();
     }
 }

@@ -14,9 +14,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.util.Objects;
-
-
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -43,10 +40,6 @@ public class FranchiseEntity extends AuditingTimeEntity {
 
     public void modifyImageUrl(final String imageUrl) {
         this.imageUrl = imageUrl;
-    }
-
-    public boolean isSameName(final String name) {
-        return Objects.equals(this.name, name);
     }
 
     public Franchise toDomain(){
