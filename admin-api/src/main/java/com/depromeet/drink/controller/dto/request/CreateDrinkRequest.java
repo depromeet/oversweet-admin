@@ -3,7 +3,9 @@ package com.depromeet.drink.controller.dto.request;
 import com.depromeet.domain.drink.domain.DrinkCategory;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.annotation.Nullable;
+import lombok.Builder;
 
+@Builder
 public record CreateDrinkRequest(
         @Schema(description = "음료 이름") String name,
         @Schema(description = "음료 사이즈") int size,
