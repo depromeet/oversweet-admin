@@ -8,10 +8,12 @@ import java.util.Optional;
 
 public interface FranchiseRepository {
     List<Franchise> findAll ();
+
     void save(Franchise franchise);
+
     Optional<Franchise> findByName(String name);
 
     Franchise findById(Long id);
 
-    void updateImage(Franchise franchise);
+    void modifyImageUrl(Franchise franchise);
 }

@@ -86,7 +86,7 @@ class FranchiseEntityServiceTest {
 
         then(franchiseRepository)
                 .should(times(1))
-                .updateImage(any());
+                .modifyImageUrl(any());
     }
 
     @Test
@@ -107,7 +107,7 @@ class FranchiseEntityServiceTest {
 
         then(franchiseRepository)
                 .should(never())
-                .updateImage(any());
+                .modifyImageUrl(any());
     }
 
     @Test

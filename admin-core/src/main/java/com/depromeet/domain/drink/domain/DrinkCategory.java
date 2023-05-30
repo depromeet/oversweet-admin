@@ -1,10 +1,13 @@
-package com.depromeet.domain.drink;
+package com.depromeet.domain.drink.domain;
 
 public enum DrinkCategory {
     AMERICANO,
     COLDBREW,
     LATTE,
     ESPRESSO,
-    SHAKE
+    SHAKE,
+    ADE,
+    TEA,
+    SMOOTHIE,
 
 }

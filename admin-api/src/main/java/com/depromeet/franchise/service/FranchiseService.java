@@ -34,7 +34,7 @@ public class FranchiseService {
     public void modifyFranchiseImage(final Long id, final ModifyFranchiseImageRequest request) {
         final var franchise = franchiseRepository.findById(id);
         franchise.modifyImageUrl(request.imageUrl());
-        franchiseRepository.updateImage(franchise);
+        franchiseRepository.modifyImageUrl(franchise);
     }
 
     @Transactional(readOnly = true)
