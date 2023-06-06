@@ -1,5 +1,6 @@
 package com.depromeet.drink.service;
 
+import com.depromeet.common.PaginatedResponse;
 import com.depromeet.common.exception.drink.DrinkAlreadyExistException;
 import com.depromeet.domain.drink.DrinkRepository;
 import com.depromeet.domain.drink.domain.Drink;
@@ -35,11 +36,11 @@ public class DrinkService {
         drinkRepository.save(drink);
     }
 
-    public List<DrinkResponse> findAllByFranchise(final Long franchiseId, final List<Integer> range) {
+    public PaginatedResponse<List<DrinkResponse>> findAllByFranchise(final Long franchiseId, final List<Integer> range) {
         final var findFranchise = franchiseRepository.findById(franchiseId);
-        final var findDrinks = drinkRepository.findAllByFranchise(findFranchise, range);
+        final var findDrinksByPage = drinkRepository.findAllByFranchise(findFranchise, range);
 
-        return findDrinks.stream()
+        var response = findDrinksByPage.getContent().stream()
                 .map(drink -> DrinkResponse.builder()
                         .id(drink.getId())
                         .name(drink.getName())
@@ -51,6 +52,8 @@ public class DrinkService {
                         .category(drink.getCategory())
                         .build())
                 .toList();
+
+        return PaginatedResponse.of(findDrinksByPage.hasNext(), findDrinksByPage.getTotalPages(), (int) findDrinksByPage.getTotalElements(), response);
 
     }
     private void validateDuplicatedDrink(final Franchise franchise, final String name) {

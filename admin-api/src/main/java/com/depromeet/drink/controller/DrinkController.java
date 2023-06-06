@@ -1,6 +1,7 @@
 package com.depromeet.drink.controller;
 
 
+import com.depromeet.common.PaginatedResponse;
 import com.depromeet.common.exception.ErrorResponse;
 import com.depromeet.common.response.ApiCommonResponse;
 import com.depromeet.common.response.ApiMessageResponse;
@@ -13,6 +14,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -45,14 +47,14 @@ public class DrinkController {
                 .body(ApiMessageResponse.of(HttpStatus.OK, "음료 저장 성공"));
     }
 
-    @Operation(summary = "해당 프랜차이즈의 음료 목록을 조회합니다.", description = "음료 조회 API")
+    @Operation(summary = "해당 프랜차이즈의 음료 목록을 조회합니다. - 페이지네이션 기능 포함.", description = "음료 조회 API")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "성공적으로 음료가 목록이 조회되었습니다."),
             @ApiResponse(responseCode = "400", description = "존재 하지 않는 프랜차이즈입니다.", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
     })
     @GetMapping("/{franchiseId}")
-    public ResponseEntity<ApiCommonResponse<List<DrinkResponse>>> drinks(@PathVariable final Long franchiseId,
-                                                                         @RequestParam(name = "range") final List<Integer> range){
+    public ResponseEntity<ApiCommonResponse<PaginatedResponse<List<DrinkResponse>>>> drinks(@PathVariable final Long franchiseId,
+                                                                                            @RequestParam(name = "range") final List<Integer> range){
         final var drinks = drinkService.findAllByFranchise(franchiseId, range);
         return ResponseEntity.ok()
                 .body(ApiCommonResponse.of(HttpStatus.OK, "해당 프랜차이즈의 음료 목록 조회 성공", drinks));

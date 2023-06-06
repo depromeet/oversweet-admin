@@ -1,6 +1,5 @@
 package com.depromeet.domain.drink.infrastructure.persistence;
 
-import com.depromeet.common.exception.drink.DrinkAlreadyExistException;
 import com.depromeet.common.exception.franchise.FranchiseNotFoundException;
 import com.depromeet.domain.drink.DrinkRepository;
 import com.depromeet.domain.drink.domain.Drink;
@@ -9,6 +8,7 @@ import com.depromeet.domain.drink.entity.DrinkEntityRepository;
 import com.depromeet.domain.franchise.domain.Franchise;
 import com.depromeet.domain.franchise.entity.FranchiseEntityRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Repository;
 
@@ -41,16 +41,14 @@ public class DrinkRepositoryImpl implements DrinkRepository {
     }
 
     @Override
-    public List<Drink> findAllByFranchise(final Franchise franchise, final List<Integer> range) {
+    public Page<Drink> findAllByFranchise(final Franchise franchise, final List<Integer> range) {
         franchiseEntityRepository.findById(franchise.getId())
                 .orElseThrow(FranchiseNotFoundException::new);
 
         final var pageRequest = PageRequest.of(range.get(0), range.get(1));
-        final List<DrinkEntity> findDrinkEntities = drinkEntityRepository.findAllByFranchiseId(franchise.getId(), pageRequest);
+        final var findDrinks = drinkEntityRepository.findAllByFranchiseId(franchise.getId(), pageRequest);
 
-        return findDrinkEntities.stream()
-                .map(DrinkEntity::toDomain)
-                .toList();
+        return findDrinks.map(DrinkEntity::toDomain);
 
     }
 
