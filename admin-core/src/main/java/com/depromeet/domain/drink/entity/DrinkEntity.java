@@ -65,4 +65,17 @@ public class DrinkEntity extends AuditingTimeEntity {
         this.imageUrl = imageUrl;
         this.category = category;
     }
+    public Drink toDomain(){
+        return Drink.builder()
+                .id(this.id)
+                .name(this.name)
+                .franchise(this.franchise.toDomain())
+                .size(this.size)
+                .sugar(this.sugar)
+                .calorie(this.calorie)
+                .imageUrl(this.imageUrl)
+                .category(this.category)
+                .build();
+
+    }
 }
