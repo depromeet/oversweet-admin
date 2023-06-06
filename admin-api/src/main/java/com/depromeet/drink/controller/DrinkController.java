@@ -9,7 +9,9 @@ import com.depromeet.drink.dto.reponse.DrinkResponse;
 import com.depromeet.drink.dto.request.CreateDrinkRequest;
 import com.depromeet.drink.service.DrinkService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -40,7 +42,7 @@ public class DrinkController {
             @ApiResponse(responseCode = "400", description = "존재 하지 않는 프랜차이즈입니다.", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
     })
     @PostMapping("/{franchiseId}")
-    public ResponseEntity<ApiMessageResponse> drinkSave(@PathVariable final Long franchiseId,
+    public ResponseEntity<ApiMessageResponse> drinkSave(@Parameter(name = "franchiseId", description = "해당 프랜차이즈 Id", required = true) @PathVariable final Long franchiseId,
                                                         @RequestBody final CreateDrinkRequest request) {
         drinkService.saveDrink(franchiseId, request);
         return ResponseEntity.ok()
@@ -53,7 +55,8 @@ public class DrinkController {
             @ApiResponse(responseCode = "400", description = "존재 하지 않는 프랜차이즈입니다.", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
     })
     @GetMapping("/{franchiseId}")
-    public ResponseEntity<ApiCommonResponse<PaginatedResponse<List<DrinkResponse>>>> drinks(@PathVariable final Long franchiseId,
+    public ResponseEntity<ApiCommonResponse<PaginatedResponse<List<DrinkResponse>>>> drinks(@Parameter(name = "franchiseId", description = "해당 프랜차이즈 Id", required = true) @PathVariable final Long franchiseId,
+                                                                                            @Parameter(description = "조회할 페이지네이션 Range - (시작 페이지, 조회할 데이터 개수)", examples = @ExampleObject(name = "예시 페이징", value = "[1, 10]"), required = true)
                                                                                             @RequestParam(name = "range") final List<Integer> range){
         final var drinks = drinkService.findAllByFranchise(franchiseId, range);
         return ResponseEntity.ok()

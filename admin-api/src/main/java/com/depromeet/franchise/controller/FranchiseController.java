@@ -9,6 +9,7 @@ import com.depromeet.franchise.dto.request.ModifyFranchiseImageRequest;
 import com.depromeet.franchise.dto.response.FranchiseResponse;
 import com.depromeet.franchise.service.FranchiseService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -52,8 +53,8 @@ public class FranchiseController {
             @ApiResponse(responseCode = "409", description = "같은 이미지 입니다.", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
     })
     @PatchMapping("/{id}")
-    public ResponseEntity<ApiMessageResponse> franchiseModifyImage(@PathVariable(name = "id") final Long id,
-                                                                        @RequestBody final ModifyFranchiseImageRequest request){
+    public ResponseEntity<ApiMessageResponse> franchiseModifyImage(@Parameter(name = "franchiseId", description = "해당 프랜차이즈 Id", required = true) @PathVariable(name = "id") final Long id,
+                                                                   @RequestBody final ModifyFranchiseImageRequest request){
         franchiseService.modifyFranchiseImage(id, request);
         return ResponseEntity.ok()
                 .body(ApiMessageResponse.of(HttpStatus.OK, "프랜차이즈 수정 성공"));
