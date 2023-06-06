@@ -1,4 +1,4 @@
-package com.depromeet.drink.controller.dto.request;
+package com.depromeet.drink.dto.request;
 
 import com.depromeet.domain.drink.domain.DrinkCategory;
 import io.swagger.v3.oas.annotations.media.Schema;

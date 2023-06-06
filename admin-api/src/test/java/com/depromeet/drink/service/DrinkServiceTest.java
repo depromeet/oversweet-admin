@@ -7,7 +7,7 @@ import com.depromeet.domain.drink.domain.DrinkCategory;
 import com.depromeet.domain.franchise.FranchiseRepository;
 import com.depromeet.domain.franchise.domain.Franchise;
 import com.depromeet.domain.franchise.entity.FranchiseEntity;
-import com.depromeet.drink.controller.dto.request.CreateDrinkRequest;
+import com.depromeet.drink.dto.request.CreateDrinkRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
