@@ -1,6 +1,7 @@
 package com.depromeet.franchise.controller;
 
 
+import com.depromeet.common.FranchiseApiResponseDescription;
 import com.depromeet.common.exception.ErrorResponse;
 import com.depromeet.common.response.ApiCommonResponse;
 import com.depromeet.common.response.ApiMessageResponse;
@@ -28,6 +29,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+import static com.depromeet.common.FranchiseApiResponseDescription.ALREADY_FRANCHISE;
+import static com.depromeet.common.FranchiseApiResponseDescription.NOT_ALLOWED_FRANCHISE_IMAGE_URL;
+import static com.depromeet.common.FranchiseApiResponseDescription.NOT_FOUND_FRANCHISE;
+import static com.depromeet.common.FranchiseApiResponseDescription.SUCCESS_FRANCHISES_FETCHED;
+import static com.depromeet.common.FranchiseApiResponseDescription.SUCCESS_FRANCHISE_IMAGE_URL_MODIFIED;
+import static com.depromeet.common.FranchiseApiResponseDescription.SUCCESS_FRANCHISE_SAVED;
+
 @Tag(name = "프랜차이즈", description = "프랜차이즈 관련 API입니다.")
 @RestController
 @RequiredArgsConstructor
@@ -38,8 +46,8 @@ public class FranchiseController {
 
     @Operation(summary = "프랜차이즈 생성", description = "프랜차이즈 생성 API입니다.")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "성공적으로 프랜차이즈가 생성되었습니다."),
-            @ApiResponse(responseCode = "409", description = "이미 존재하는 프랜차이즈입니다.", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+            @ApiResponse(responseCode = "200", description = SUCCESS_FRANCHISE_SAVED),
+            @ApiResponse(responseCode = "409", description = ALREADY_FRANCHISE, content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
     })
     @PostMapping
     public ResponseEntity<ApiMessageResponse> franchiseSave(@RequestBody final CreateFranchiseRequest request) {
@@ -50,9 +58,9 @@ public class FranchiseController {
 
     @Operation(summary = "프랜차이즈 이미지 변경", description = "프랜차이즈 이미지 수정 API입니다.")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "성공적으로 프랜차이즈가 생성되었습니다."),
-            @ApiResponse(responseCode = "400", description = "존재 하지 않는 프랜차이즈입니다.", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
-            @ApiResponse(responseCode = "403", description = "잘못된 이미지 Url입니다.", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+            @ApiResponse(responseCode = "200", description = SUCCESS_FRANCHISE_IMAGE_URL_MODIFIED),
+            @ApiResponse(responseCode = "400", description = NOT_FOUND_FRANCHISE, content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+            @ApiResponse(responseCode = "403", description = NOT_ALLOWED_FRANCHISE_IMAGE_URL, content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
     })
     @PatchMapping("/{id}")
     public ResponseEntity<ApiMessageResponse> franchiseModifyImage(@Parameter(name = "franchiseId", description = "해당 프랜차이즈 Id", required = true) @PathVariable(name = "id") final Long id,
@@ -63,7 +71,7 @@ public class FranchiseController {
     }
 
     @Operation(summary = "프랜차이즈 전체 목록 조회", description = "프랜차이즈 전체 목록 조회 API입니다.")
-    @ApiResponses(@ApiResponse(responseCode = "200", description = "성공적으로 프랜차이즈 목록을 조회했습니다."))
+    @ApiResponses(@ApiResponse(responseCode = "200", description = SUCCESS_FRANCHISES_FETCHED))
     @GetMapping
     public ResponseEntity<ApiCommonResponse<List<FranchiseResponse>>> franchises(){
         final var franchises = franchiseService.findAllFranchise();
