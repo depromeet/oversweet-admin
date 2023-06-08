@@ -11,6 +11,7 @@ import com.depromeet.drink.dto.request.CreateDrinkRequest;
 import com.depromeet.drink.dto.request.ModifyDrinkImageRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -20,6 +21,7 @@ public class DrinkService {
     private final FranchiseRepository franchiseRepository;
     private final DrinkRepository drinkRepository;
 
+    @Transactional
     public void saveDrink(final Long franchiseId, final CreateDrinkRequest request) {
         final var findFranchise = franchiseRepository.findById(franchiseId);
 
@@ -38,6 +40,7 @@ public class DrinkService {
         drinkRepository.save(drink);
     }
 
+    @Transactional(readOnly = true)
     public PaginatedResponse<List<DrinkResponse>> findAllByFranchise(final Long franchiseId, final List<Integer> range) {
         final var findFranchise = franchiseRepository.findById(franchiseId);
         final var findDrinksByPage = drinkRepository.findAllByFranchise(findFranchise, range);
@@ -59,6 +62,7 @@ public class DrinkService {
 
     }
 
+    @Transactional
     public void modifyDrinkImage(final Long id, final ModifyDrinkImageRequest request){
         final var findDrink = drinkRepository.findById(id);
         findDrink.modifyImageUrl(request.imageUrl());

@@ -63,7 +63,7 @@ public class DrinkRepositoryImpl implements DrinkRepository {
 
     @Override
     public Drink findById(final Long id) {
-        final DrinkEntity findDrinkEntity = drinkEntityRepository.findById(id)
+        final var findDrinkEntity = drinkEntityRepository.findById(id)
                 .orElseThrow(DrinkNotFoundException::new);
         return findDrinkEntity.toDomain();
     }

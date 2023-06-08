@@ -39,7 +39,7 @@ public class FranchiseService {
 
     @Transactional(readOnly = true)
     public List<FranchiseResponse> findAllFranchise() {
-        final List<Franchise> findFranchises = franchiseRepository.findAll();
+        final var findFranchises = franchiseRepository.findAll();
 
         return findFranchises.stream()
                 .map(franchise -> FranchiseResponse.builder()
