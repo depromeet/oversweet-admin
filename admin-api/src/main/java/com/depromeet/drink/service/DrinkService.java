@@ -2,12 +2,13 @@ package com.depromeet.drink.service;
 
 import com.depromeet.common.PaginatedResponse;
 import com.depromeet.common.exception.drink.DrinkAlreadyExistException;
-import com.depromeet.domain.drink.DrinkRepository;
+import com.depromeet.domain.drink.infrastructure.persistence.DrinkRepository;
 import com.depromeet.domain.drink.domain.Drink;
-import com.depromeet.domain.franchise.FranchiseRepository;
+import com.depromeet.domain.franchise.infrastructure.persistence.FranchiseRepository;
 import com.depromeet.domain.franchise.domain.Franchise;
 import com.depromeet.drink.dto.reponse.DrinkResponse;
 import com.depromeet.drink.dto.request.CreateDrinkRequest;
+import com.depromeet.drink.dto.request.ModifyDrinkImageRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +19,7 @@ import java.util.List;
 public class DrinkService {
     private final FranchiseRepository franchiseRepository;
     private final DrinkRepository drinkRepository;
+
     public void saveDrink(final Long franchiseId, final CreateDrinkRequest request) {
         final var findFranchise = franchiseRepository.findById(franchiseId);
 
@@ -56,10 +58,18 @@ public class DrinkService {
         return PaginatedResponse.of(findDrinksByPage.hasNext(), findDrinksByPage.getTotalPages(), (int) findDrinksByPage.getTotalElements(), response);
 
     }
+
+    public void modifyDrinkImage(final Long id, final ModifyDrinkImageRequest request){
+        final var findDrink = drinkRepository.findById(id);
+        findDrink.modifyImageUrl(request.imageUrl());
+        drinkRepository.modifyImageUrl(findDrink);
+    }
+
     private void validateDuplicatedDrink(final Franchise franchise, final String name) {
         final var findDrink = drinkRepository.findByFranchise(franchise, name);
         if (findDrink.isPresent()) {
             throw new DrinkAlreadyExistException();
         }
     }
+
 }

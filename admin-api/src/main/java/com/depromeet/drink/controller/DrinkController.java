@@ -7,6 +7,7 @@ import com.depromeet.common.response.ApiCommonResponse;
 import com.depromeet.common.response.ApiMessageResponse;
 import com.depromeet.drink.dto.reponse.DrinkResponse;
 import com.depromeet.drink.dto.request.CreateDrinkRequest;
+import com.depromeet.drink.dto.request.ModifyDrinkImageRequest;
 import com.depromeet.drink.service.DrinkService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -20,6 +21,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -61,5 +63,19 @@ public class DrinkController {
         final var drinks = drinkService.findAllByFranchise(franchiseId, range);
         return ResponseEntity.ok()
                 .body(ApiCommonResponse.of(HttpStatus.OK, "해당 프랜차이즈의 음료 목록 조회 성공", drinks));
+    }
+
+    @Operation(summary = "해당 음료의 이미지 Url을 수정합니다.", description = "음료 이미지 수정 API")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "성공적으로 음료의 이미지가 수정 되었습니다."),
+            @ApiResponse(responseCode = "400", description = "존재 하지 않는 음료입니다.", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+            @ApiResponse(responseCode = "403", description = "잘못된 이미지 Url입니다.", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+    })
+    @PatchMapping("/{drinkId}")
+    public ResponseEntity<ApiMessageResponse> drinkModifyImage(@Parameter(name = "drinkId", description = "해당 음료 Id", required = true) @PathVariable final Long drinkId,
+                                                               @RequestBody final ModifyDrinkImageRequest request){
+        drinkService.modifyDrinkImage(drinkId, request);
+        return ResponseEntity.ok()
+                .body(ApiMessageResponse.of(HttpStatus.OK, "음료 이미지 수정 성공"));
     }
 }

@@ -1,7 +1,7 @@
 package com.depromeet.domain.drink.infrastructure.persistence;
 
+import com.depromeet.common.exception.drink.DrinkNotFoundException;
 import com.depromeet.common.exception.franchise.FranchiseNotFoundException;
-import com.depromeet.domain.drink.DrinkRepository;
 import com.depromeet.domain.drink.domain.Drink;
 import com.depromeet.domain.drink.entity.DrinkEntity;
 import com.depromeet.domain.drink.entity.DrinkEntityRepository;
@@ -59,5 +59,19 @@ public class DrinkRepositoryImpl implements DrinkRepository {
 
         final var findDrinkEntity = drinkEntityRepository.findByFranchiseIdAndName(franchise.getId(), name);
         return findDrinkEntity.map(DrinkEntity::toDomain);
+    }
+
+    @Override
+    public Drink findById(final Long id) {
+        final DrinkEntity findDrinkEntity = drinkEntityRepository.findById(id)
+                .orElseThrow(DrinkNotFoundException::new);
+        return findDrinkEntity.toDomain();
+    }
+
+    @Override
+    public void modifyImageUrl(final Drink drink) {
+        final var findDrinkEntity = drinkEntityRepository.findById(drink.getId())
+                .orElseThrow(DrinkNotFoundException::new);
+        findDrinkEntity.modifyImageUrl(drink.getImageUrl());
     }
 }

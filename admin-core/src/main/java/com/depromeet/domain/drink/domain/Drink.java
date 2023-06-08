@@ -2,7 +2,6 @@ package com.depromeet.domain.drink.domain;
 
 
 import com.depromeet.common.exception.drink.DrinkImageUrlUpdateNotAllowedException;
-import com.depromeet.common.exception.franchise.FranchiseImageUrlUpdateNotAllowedException;
 import com.depromeet.domain.franchise.domain.Franchise;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -32,6 +31,12 @@ public class Drink {
         this.imageUrl = imageUrl;
         this.category = category;
     }
+
+    public void modifyImageUrl(final String imageUrl) {
+        validateImageUrl(imageUrl);
+        this.imageUrl = imageUrl;
+    }
+
     private void validateImageUrl(final String imageUrl) {
         if (!imageUrl.startsWith("https://oversweet.s3")) {
             throw new DrinkImageUrlUpdateNotAllowedException();
