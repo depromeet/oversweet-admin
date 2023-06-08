@@ -1,6 +1,8 @@
 package com.depromeet.drink.controller;
 
 
+import com.depromeet.common.DrinkApiResponseDescription;
+import com.depromeet.common.FranchiseApiResponseDescription;
 import com.depromeet.common.PaginatedResponse;
 import com.depromeet.common.exception.ErrorResponse;
 import com.depromeet.common.response.ApiCommonResponse;
@@ -31,6 +33,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+import static com.depromeet.common.DrinkApiResponseDescription.NOT_ALLOWED_DRINK_IMAGE_URL;
+import static com.depromeet.common.DrinkApiResponseDescription.NOT_FOUND_DRINK;
+import static com.depromeet.common.DrinkApiResponseDescription.SUCCESS_DRINKS_FETCHED;
+import static com.depromeet.common.DrinkApiResponseDescription.SUCCESS_DRINK_IMAGE_URL_MODIFIED;
+import static com.depromeet.common.DrinkApiResponseDescription.SUCCESS_DRINK_SAVED;
+import static com.depromeet.common.FranchiseApiResponseDescription.NOT_FOUND_FRANCHISE;
+
 @Tag(name = "음료", description = "음료 관련 API입니다.")
 @RestController
 @RequiredArgsConstructor
@@ -41,8 +50,8 @@ public class DrinkController {
 
     @Operation(summary = "음료 생성", description = "음료 생성 API입니다.")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "성공적으로 음료가 생성되었습니다."),
-            @ApiResponse(responseCode = "400", description = "존재 하지 않는 프랜차이즈입니다.", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+            @ApiResponse(responseCode = "200", description = SUCCESS_DRINK_SAVED),
+            @ApiResponse(responseCode = "400", description = NOT_FOUND_FRANCHISE, content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
     })
     @PostMapping("/{franchiseId}")
     public ResponseEntity<ApiMessageResponse> drinkSave(@Parameter(name = "franchiseId", description = "해당 프랜차이즈 Id", required = true) @PathVariable final Long franchiseId,
@@ -54,8 +63,8 @@ public class DrinkController {
 
     @Operation(summary = "해당 프랜차이즈의 음료 목록을 조회합니다. - 페이지네이션 기능 포함.", description = "음료 조회 API")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "성공적으로 음료가 목록이 조회되었습니다."),
-            @ApiResponse(responseCode = "400", description = "존재 하지 않는 프랜차이즈입니다.", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+            @ApiResponse(responseCode = "200", description = SUCCESS_DRINKS_FETCHED),
+            @ApiResponse(responseCode = "400", description = NOT_FOUND_FRANCHISE, content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
     })
     @GetMapping("/{franchiseId}")
     public ResponseEntity<ApiCommonResponse<PaginatedResponse<List<DrinkResponse>>>> drinks(@Parameter(name = "franchiseId", description = "해당 프랜차이즈 Id", required = true) @PathVariable final Long franchiseId,
@@ -68,14 +77,14 @@ public class DrinkController {
 
     @Operation(summary = "해당 음료의 이미지 Url을 수정합니다.", description = "음료 이미지 수정 API")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "성공적으로 음료의 이미지가 수정 되었습니다."),
-            @ApiResponse(responseCode = "400", description = "존재 하지 않는 음료입니다.", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
-            @ApiResponse(responseCode = "403", description = "잘못된 이미지 Url입니다.", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+            @ApiResponse(responseCode = "200", description = SUCCESS_DRINK_IMAGE_URL_MODIFIED),
+            @ApiResponse(responseCode = "400", description = NOT_FOUND_DRINK, content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+            @ApiResponse(responseCode = "403", description = NOT_ALLOWED_DRINK_IMAGE_URL, content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
     })
-    @PatchMapping("/{drinkId}")
-    public ResponseEntity<ApiMessageResponse> drinkModifyImage(@Parameter(name = "drinkId", description = "해당 음료 Id", required = true) @PathVariable final Long drinkId,
+    @PatchMapping("/{id}")
+    public ResponseEntity<ApiMessageResponse> drinkModifyImage(@Parameter(name = "drinkId", description = "해당 음료 Id", required = true) @PathVariable final Long id,
                                                                @RequestBody final ModifyDrinkImageRequest request){
-        drinkService.modifyDrinkImage(drinkId, request);
+        drinkService.modifyDrinkImage(id, request);
         return ResponseEntity.ok()
                 .body(ApiMessageResponse.of(HttpStatus.OK, "음료 이미지 수정 성공"));
     }
