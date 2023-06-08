@@ -1,7 +1,7 @@
 package com.depromeet.franchise.service;
 
 import com.depromeet.common.exception.franchise.FranchiseAlreadyExistException;
-import com.depromeet.domain.franchise.FranchiseRepository;
+import com.depromeet.domain.franchise.infrastructure.persistence.FranchiseRepository;
 import com.depromeet.domain.franchise.domain.Franchise;
 import com.depromeet.franchise.dto.request.CreateFranchiseRequest;
 import com.depromeet.franchise.dto.request.ModifyFranchiseImageRequest;

@@ -29,7 +29,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/franchise")
+@RequestMapping("/api/franchises")
 public class FranchiseController {
 
     private final FranchiseService franchiseService;
@@ -50,14 +50,14 @@ public class FranchiseController {
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "성공적으로 프랜차이즈가 생성되었습니다."),
             @ApiResponse(responseCode = "400", description = "존재 하지 않는 프랜차이즈입니다.", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
-            @ApiResponse(responseCode = "409", description = "같은 이미지 입니다.", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+            @ApiResponse(responseCode = "403", description = "잘못된 이미지 Url입니다.", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
     })
     @PatchMapping("/{id}")
     public ResponseEntity<ApiMessageResponse> franchiseModifyImage(@Parameter(name = "franchiseId", description = "해당 프랜차이즈 Id", required = true) @PathVariable(name = "id") final Long id,
                                                                    @RequestBody final ModifyFranchiseImageRequest request){
         franchiseService.modifyFranchiseImage(id, request);
         return ResponseEntity.ok()
-                .body(ApiMessageResponse.of(HttpStatus.OK, "프랜차이즈 수정 성공"));
+                .body(ApiMessageResponse.of(HttpStatus.OK, "프랜차이즈 이미지 수정 성공"));
     }
 
     @Operation(summary = "프랜차이즈 전체 목록 조회", description = "프랜차이즈 전체 목록 조회 API입니다.")

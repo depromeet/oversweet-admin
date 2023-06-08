@@ -2,6 +2,8 @@ package com.depromeet.common.exception;
 
 
 import com.depromeet.common.exception.drink.DrinkAlreadyExistException;
+import com.depromeet.common.exception.drink.DrinkImageUrlUpdateNotAllowedException;
+import com.depromeet.common.exception.drink.DrinkNotFoundException;
 import com.depromeet.common.exception.franchise.FranchiseAlreadyExistException;
 import com.depromeet.common.exception.franchise.FranchiseImageUrlUpdateNotAllowedException;
 import com.depromeet.common.exception.franchise.FranchiseNotFoundException;
@@ -20,6 +22,8 @@ public enum ErrorType {
     F002("F002", "존재 하지 않는 프랜차이즈입니다.", FranchiseNotFoundException.class),
     F003("F003", "정책에 맞지 않는 ImageUrl입니다", FranchiseImageUrlUpdateNotAllowedException.class),
     D001("D001", "해당 프랜차이즈에 이미 존재 하는 음료입니다.", DrinkAlreadyExistException.class),
+    D002("D002", "존재 하지 않는 음료입니다.", DrinkNotFoundException.class),
+    D003("D003", "정책에 맞지 않는 ImageUrl입니다.", DrinkImageUrlUpdateNotAllowedException.class),
 
     NOTUSED_EXCEPTION("X001", "정의되지 않은 에러", UndefinedException.class),
 

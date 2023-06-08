@@ -3,7 +3,6 @@ package com.depromeet.domain.franchise.infrastructure.persistence;
 import com.depromeet.common.exception.franchise.FranchiseNotFoundException;
 import com.depromeet.domain.franchise.entity.FranchiseEntity;
 import com.depromeet.domain.franchise.entity.FranchiseEntityRepository;
-import com.depromeet.domain.franchise.FranchiseRepository;
 import com.depromeet.domain.franchise.domain.Franchise;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;

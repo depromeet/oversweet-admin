@@ -1,10 +1,10 @@
 package com.depromeet.drink.service;
 
 
-import com.depromeet.domain.drink.DrinkRepository;
+import com.depromeet.domain.drink.infrastructure.persistence.DrinkRepository;
 import com.depromeet.domain.drink.domain.Drink;
 import com.depromeet.domain.drink.domain.DrinkCategory;
-import com.depromeet.domain.franchise.FranchiseRepository;
+import com.depromeet.domain.franchise.infrastructure.persistence.FranchiseRepository;
 import com.depromeet.domain.franchise.domain.Franchise;
 import com.depromeet.domain.franchise.entity.FranchiseEntity;
 import com.depromeet.drink.dto.request.CreateDrinkRequest;

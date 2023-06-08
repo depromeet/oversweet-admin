@@ -1,4 +1,4 @@
-package com.depromeet.domain.franchise;
+package com.depromeet.domain.franchise.infrastructure.persistence;
 
 
 import com.depromeet.domain.franchise.domain.Franchise;
