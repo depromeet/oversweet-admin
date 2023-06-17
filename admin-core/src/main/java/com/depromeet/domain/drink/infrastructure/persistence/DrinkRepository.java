@@ -17,4 +17,6 @@ public interface DrinkRepository {
     Drink findById(Long id);
 
     void modifyImageUrl(Drink drink);
+
+    void modify(Drink drink);
 }

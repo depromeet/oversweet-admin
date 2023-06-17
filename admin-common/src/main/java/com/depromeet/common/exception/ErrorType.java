@@ -2,7 +2,10 @@ package com.depromeet.common.exception;
 
 
 import com.depromeet.common.exception.drink.DrinkAlreadyExistException;
+import com.depromeet.common.exception.drink.DrinkCategoryNotAllowedException;
 import com.depromeet.common.exception.drink.DrinkImageUrlUpdateNotAllowedException;
+import com.depromeet.common.exception.drink.DrinkIntvalueNotAllowedException;
+import com.depromeet.common.exception.drink.DrinkNameIsNotEmptyException;
 import com.depromeet.common.exception.drink.DrinkNotFoundException;
 import com.depromeet.common.exception.franchise.FranchiseAlreadyExistException;
 import com.depromeet.common.exception.franchise.FranchiseImageUrlUpdateNotAllowedException;
@@ -24,6 +27,9 @@ public enum ErrorType {
     D001("D001", "해당 프랜차이즈에 이미 존재 하는 음료입니다.", DrinkAlreadyExistException.class),
     D002("D002", "존재 하지 않는 음료입니다.", DrinkNotFoundException.class),
     D003("D003", "정책에 맞지 않는 ImageUrl입니다.", DrinkImageUrlUpdateNotAllowedException.class),
+    D004("D004", "음료의 이름을 설정해야 합니다.", DrinkNameIsNotEmptyException.class),
+    D005("D005", "음료의 사이즈, 칼로리, 당 정보는 0 이하일 수 없습니다.", DrinkIntvalueNotAllowedException.class),
+    D006("D006", "음료의 카테고리를 확인해주세요.", DrinkCategoryNotAllowedException.class),
 
     NOTUSED_EXCEPTION("X001", "정의되지 않은 에러", UndefinedException.class),
 

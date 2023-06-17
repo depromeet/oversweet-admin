@@ -70,6 +70,26 @@ public class DrinkEntity extends AuditingTimeEntity {
         this.imageUrl = imageUrl;
     }
 
+    public void modifyName(final String name) {
+        this.name = name;
+    }
+
+    public void modifySize(final int size) {
+        this.size = size;
+    }
+
+    public void modifySugar(final int sugar) {
+        this.sugar = sugar;
+    }
+
+    public void modifyCalorie(final int calorie) {
+        this.calorie = calorie;
+    }
+
+    public void modifyCategory(final DrinkCategory category) {
+        this.category = category;
+    }
+
     public Drink toDomain(){
         return Drink.builder()
                 .id(this.id)
