@@ -40,7 +40,7 @@ import static com.depromeet.common.FranchiseApiResponseDescription.NOT_FOUND_FRA
 @Tag(name = "음료", description = "음료 관련 API입니다.")
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/drinks")
+@RequestMapping("/api")
 public class DrinkController {
 
     private final DrinkService drinkService;
@@ -50,7 +50,7 @@ public class DrinkController {
             @ApiResponse(responseCode = "200", description = SUCCESS_DRINK_SAVED),
             @ApiResponse(responseCode = "400", description = NOT_FOUND_FRANCHISE, content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
     })
-    @PostMapping("/{franchiseId}")
+    @PostMapping("/franchises/{franchiseId}/drinks")
     public ResponseEntity<ApiMessageResponse> drinkSave(@Parameter(name = "franchiseId", description = "해당 프랜차이즈 Id", required = true) @PathVariable final Long franchiseId,
                                                         @RequestBody final CreateDrinkRequest request) {
         drinkService.saveDrink(franchiseId, request);
@@ -63,7 +63,7 @@ public class DrinkController {
             @ApiResponse(responseCode = "200", description = SUCCESS_DRINKS_FETCHED),
             @ApiResponse(responseCode = "400", description = NOT_FOUND_FRANCHISE, content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
     })
-    @GetMapping("/{franchiseId}")
+    @GetMapping("/franchises/{franchiseId}/drinks")
     public ResponseEntity<ApiCommonResponse<PaginatedResponse<List<DrinkResponse>>>> drinks(@Parameter(name = "franchiseId", description = "해당 프랜차이즈 Id", required = true) @PathVariable final Long franchiseId,
                                                                                             @Parameter(description = "조회할 페이지네이션 Range - (시작 페이지, 조회할 데이터 개수)", examples = @ExampleObject(name = "예시 페이징", value = "[1, 10]"), required = true)
                                                                                             @RequestParam(name = "range") final List<Integer> range){
@@ -78,7 +78,7 @@ public class DrinkController {
             @ApiResponse(responseCode = "400", description = NOT_FOUND_DRINK, content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
             @ApiResponse(responseCode = "403", description = NOT_ALLOWED_DRINK_IMAGE_URL, content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
     })
-    @PatchMapping("/{id}")
+    @PatchMapping("/drinks/{id}")
     public ResponseEntity<ApiMessageResponse> drinkModifyImage(@Parameter(name = "drinkId", description = "해당 음료 Id", required = true) @PathVariable final Long id,
                                                                @RequestBody final ModifyDrinkImageRequest request){
         drinkService.modifyDrinkImage(id, request);
