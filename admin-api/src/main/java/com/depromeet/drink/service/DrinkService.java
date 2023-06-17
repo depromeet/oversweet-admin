@@ -9,6 +9,7 @@ import com.depromeet.domain.franchise.domain.Franchise;
 import com.depromeet.drink.dto.reponse.DrinkResponse;
 import com.depromeet.drink.dto.request.CreateDrinkRequest;
 import com.depromeet.drink.dto.request.ModifyDrinkImageRequest;
+import com.depromeet.drink.dto.request.ModifyDrinkRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -45,7 +46,7 @@ public class DrinkService {
         final var findFranchise = franchiseRepository.findById(franchiseId);
         final var findDrinksByPage = drinkRepository.findAllByFranchise(findFranchise, range);
 
-        var response = findDrinksByPage.getContent().stream()
+        final var response = findDrinksByPage.getContent().stream()
                 .map(drink -> DrinkResponse.builder()
                         .id(drink.getId())
                         .name(drink.getName())
@@ -69,11 +70,23 @@ public class DrinkService {
         drinkRepository.modifyImageUrl(findDrink);
     }
 
+    @Transactional
+    public void modifyDrink(final Long id, final ModifyDrinkRequest request) {
+        final var findDrink = drinkRepository.findById(id);
+
+        findDrink.modifyCalorie(request.calorie());
+        findDrink.modifyName(request.name());
+        findDrink.modifySize(request.size());
+        findDrink.modifySugar(request.sugar());
+        findDrink.modifyCategory(request.category());
+
+        drinkRepository.modify(findDrink);
+    }
+
     private void validateDuplicatedDrink(final Franchise franchise, final String name) {
         final var findDrink = drinkRepository.findByFranchise(franchise, name);
         if (findDrink.isPresent()) {
             throw new DrinkAlreadyExistException();
         }
     }
-
 }

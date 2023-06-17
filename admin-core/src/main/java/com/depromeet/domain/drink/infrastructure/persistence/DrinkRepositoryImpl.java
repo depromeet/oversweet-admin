@@ -74,4 +74,15 @@ public class DrinkRepositoryImpl implements DrinkRepository {
                 .orElseThrow(DrinkNotFoundException::new);
         findDrinkEntity.modifyImageUrl(drink.getImageUrl());
     }
+
+    @Override
+    public void modify(final Drink drink) {
+        final var findDrinkEntity = drinkEntityRepository.findById(drink.getId())
+                .orElseThrow(DrinkNotFoundException::new);
+        findDrinkEntity.modifyCalorie(drink.getCalorie());
+        findDrinkEntity.modifyName(drink.getName());
+        findDrinkEntity.modifySize(drink.getSize());
+        findDrinkEntity.modifySugar(drink.getSugar());
+        findDrinkEntity.modifyCategory(drink.getCategory());
+    }
 }
