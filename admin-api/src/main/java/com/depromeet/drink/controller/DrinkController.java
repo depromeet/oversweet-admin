@@ -1,8 +1,5 @@
 package com.depromeet.drink.controller;
 
-
-import com.depromeet.common.DrinkApiResponseDescription;
-import com.depromeet.common.FranchiseApiResponseDescription;
 import com.depromeet.common.PaginatedResponse;
 import com.depromeet.common.exception.ErrorResponse;
 import com.depromeet.common.response.ApiCommonResponse;

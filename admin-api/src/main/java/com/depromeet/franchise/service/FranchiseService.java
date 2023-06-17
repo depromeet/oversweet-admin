@@ -45,7 +45,7 @@ public class FranchiseService {
                 .map(franchise -> FranchiseResponse.builder()
                         .id(franchise.getId())
                         .name(franchise.getName())
-                        .ImageUrl(franchise.getImageUrl())
+                        .imageUrl(franchise.getImageUrl())
                         .build())
                 .toList();
     }

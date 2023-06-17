@@ -1,7 +1,6 @@
 package com.depromeet.franchise.controller;
 
 
-import com.depromeet.common.FranchiseApiResponseDescription;
 import com.depromeet.common.exception.ErrorResponse;
 import com.depromeet.common.response.ApiCommonResponse;
 import com.depromeet.common.response.ApiMessageResponse;
