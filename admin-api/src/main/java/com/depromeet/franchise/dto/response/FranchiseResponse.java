@@ -6,6 +6,6 @@ import lombok.Builder;
 public record FranchiseResponse(
         @Schema(description = "해당 프랜차이즈 아이디") Long id,
         @Schema(description = "해당 프랜차이즈 이름") String name,
-        @Schema(description = "해당 프랜차이즈 ImageUrl") String ImageUrl
+        @Schema(description = "해당 프랜차이즈 ImageUrl") String imageUrl
 ) {
 }
