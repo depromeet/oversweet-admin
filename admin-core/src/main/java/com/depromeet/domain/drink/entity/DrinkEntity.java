@@ -54,8 +54,11 @@ public class DrinkEntity extends AuditingTimeEntity {
     @Column(name = "category")
     private DrinkCategory category;
 
+    @Column(name = "is_minimum", nullable = false)
+    private Boolean isMinimum;
+
     @Builder
-    public DrinkEntity(final Long id, final String name, final FranchiseEntity franchise, final int size, final int sugar, final int calorie, final String imageUrl, final DrinkCategory category) {
+    public DrinkEntity(final Long id, final String name, final FranchiseEntity franchise, final int size, final int sugar, final int calorie, final String imageUrl, final DrinkCategory category, final Boolean isMinimum) {
         this.id = id;
         this.name = name;
         this.franchise = franchise;
@@ -64,6 +67,7 @@ public class DrinkEntity extends AuditingTimeEntity {
         this.calorie = calorie;
         this.imageUrl = imageUrl;
         this.category = category;
+        this.isMinimum = isMinimum;
     }
 
     public void modifyImageUrl(final String imageUrl) {
@@ -90,6 +94,10 @@ public class DrinkEntity extends AuditingTimeEntity {
         this.category = category;
     }
 
+    public void modifyIsMinimum(final Boolean minimum) {
+        this.isMinimum = minimum;
+    }
+
     public Drink toDomain(){
         return Drink.builder()
                 .id(this.id)
@@ -100,6 +108,7 @@ public class DrinkEntity extends AuditingTimeEntity {
                 .calorie(this.calorie)
                 .imageUrl(this.imageUrl)
                 .category(this.category)
+                .isMinimum(this.isMinimum)
                 .build();
 
     }

@@ -4,7 +4,7 @@ import com.depromeet.common.PaginatedResponse;
 import com.depromeet.common.exception.ErrorResponse;
 import com.depromeet.common.response.ApiCommonResponse;
 import com.depromeet.common.response.ApiMessageResponse;
-import com.depromeet.drink.dto.reponse.DrinkResponse;
+import com.depromeet.drink.dto.response.DrinkResponse;
 import com.depromeet.drink.dto.request.CreateDrinkRequest;
 import com.depromeet.drink.dto.request.ModifyDrinkImageRequest;
 import com.depromeet.drink.dto.request.ModifyDrinkRequest;

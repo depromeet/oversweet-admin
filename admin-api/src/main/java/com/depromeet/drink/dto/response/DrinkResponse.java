@@ -1,4 +1,4 @@
-package com.depromeet.drink.dto.reponse;
+package com.depromeet.drink.dto.response;
 
 import com.depromeet.domain.drink.domain.DrinkCategory;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -13,6 +13,7 @@ public record DrinkResponse(
         @Schema(description = "해당 음료의 당") int sugar,
         @Schema(description = "해당 음료의 칼로리") int calorie,
         @Schema(description = "해당 음료의 이미지 Url") String imageUrl,
-        @Schema(description = "해당 음료의 카테고리") DrinkCategory category
+        @Schema(description = "해당 음료의 카테고리") DrinkCategory category,
+        @Schema(description = "해당 음료의 최소 사이즈 여부") boolean isMinimum
 ) {
 }

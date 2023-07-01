@@ -24,9 +24,10 @@ public class Drink {
     private int calorie;
     private String imageUrl;
     private DrinkCategory category;
+    private boolean isMinimum;
 
     @Builder
-    public Drink(final Long id, final String name, final Franchise franchise, final int size, final int sugar, final int calorie, final String imageUrl, final DrinkCategory category) {
+    public Drink(final Long id, final String name, final Franchise franchise, final int size, final int sugar, final int calorie, final String imageUrl, final DrinkCategory category, final boolean isMinimum) {
         this.id = id;
         this.name = name;
         this.franchise = franchise;
@@ -35,6 +36,7 @@ public class Drink {
         this.calorie = calorie;
         this.imageUrl = imageUrl;
         this.category = category;
+        this.isMinimum = isMinimum;
     }
 
     public void modifyImageUrl(final String imageUrl) {
@@ -65,6 +67,10 @@ public class Drink {
     public void modifyCategory(final DrinkCategory category) {
         validateDrinkCategory(category);
         this.category = category;
+    }
+
+    public void modifyIsMinimum(final boolean isMinimum){
+        this.isMinimum = isMinimum;
     }
 
     private void validateDrinkCategory(final DrinkCategory category){
