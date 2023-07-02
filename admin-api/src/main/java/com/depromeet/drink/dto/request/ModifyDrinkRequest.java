@@ -8,6 +8,7 @@ public record ModifyDrinkRequest(
         @Schema(description = "음료 사이즈") int size,
         @Schema(description = "음료 당") int sugar,
         @Schema(description = "음료 칼로리") int calorie,
-        @Schema(description = "음료 카테고리") DrinkCategory category
+        @Schema(description = "음료 카테고리") DrinkCategory category,
+        @Schema(description = "음료 최소 사이즈 여부") boolean isMinimum
 ) {
 }

@@ -6,7 +6,7 @@ import com.depromeet.domain.drink.infrastructure.persistence.DrinkRepository;
 import com.depromeet.domain.drink.domain.Drink;
 import com.depromeet.domain.franchise.infrastructure.persistence.FranchiseRepository;
 import com.depromeet.domain.franchise.domain.Franchise;
-import com.depromeet.drink.dto.reponse.DrinkResponse;
+import com.depromeet.drink.dto.response.DrinkResponse;
 import com.depromeet.drink.dto.request.CreateDrinkRequest;
 import com.depromeet.drink.dto.request.ModifyDrinkImageRequest;
 import com.depromeet.drink.dto.request.ModifyDrinkRequest;
@@ -36,6 +36,7 @@ public class DrinkService {
                 .imageUrl(request.imageUrl())
                 .category(request.category())
                 .franchise(findFranchise)
+                .isMinimum(request.isMinimum())
                 .build();
 
         drinkRepository.save(drink);
@@ -56,6 +57,7 @@ public class DrinkService {
                         .calorie(drink.getCalorie())
                         .imageUrl(drink.getImageUrl())
                         .category(drink.getCategory())
+                        .isMinimum(drink.isMinimum())
                         .build())
                 .toList();
 
@@ -79,6 +81,7 @@ public class DrinkService {
         findDrink.modifySize(request.size());
         findDrink.modifySugar(request.sugar());
         findDrink.modifyCategory(request.category());
+        findDrink.modifyIsMinimum(request.isMinimum());
 
         drinkRepository.modify(findDrink);
     }
