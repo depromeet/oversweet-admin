@@ -20,6 +20,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -35,6 +36,7 @@ import java.util.List;
 import static com.depromeet.common.DrinkApiResponseDescription.NOT_ALLOWED_DRINK_IMAGE_URL;
 import static com.depromeet.common.DrinkApiResponseDescription.NOT_FOUND_DRINK;
 import static com.depromeet.common.DrinkApiResponseDescription.SUCCESS_DRINKS_FETCHED;
+import static com.depromeet.common.DrinkApiResponseDescription.SUCCESS_DRINK_DELETE;
 import static com.depromeet.common.DrinkApiResponseDescription.SUCCESS_DRINK_IMAGE_URL_MODIFIED;
 import static com.depromeet.common.DrinkApiResponseDescription.SUCCESS_DRINK_MODIFIED;
 import static com.depromeet.common.DrinkApiResponseDescription.SUCCESS_DRINK_SAVED;
@@ -100,5 +102,18 @@ public class DrinkController {
         drinkService.modifyDrink(id, request);
         return ResponseEntity.ok()
                 .body(ApiMessageResponse.of(HttpStatus.OK, "음료 수정 성공"));
+    }
+
+    @Operation(summary = "해당 음료를 삭제합니다.", description = "음료 삭제 API")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = SUCCESS_DRINK_DELETE),
+            @ApiResponse(responseCode = "400", description = NOT_FOUND_DRINK, content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+    })
+    @DeleteMapping("/drinks/{drinkId}")
+    public ResponseEntity<ApiMessageResponse> drinkDelete(@Parameter(name = "drinkId", description = "해당 음료 Id", required = true) @PathVariable final Long drinkId){
+
+        drinkService.deleteDrink(drinkId);
+        return ResponseEntity.ok()
+                .body(ApiMessageResponse.of(HttpStatus.OK, "음료 삭제 성공"));
     }
 }

@@ -19,4 +19,6 @@ public interface DrinkRepository {
     void modifyImageUrl(Drink drink);
 
     void modify(Drink drink);
+
+    void delete(Drink drink);
 }

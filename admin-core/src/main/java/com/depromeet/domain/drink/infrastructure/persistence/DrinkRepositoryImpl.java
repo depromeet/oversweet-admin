@@ -87,4 +87,9 @@ public class DrinkRepositoryImpl implements DrinkRepository {
         findDrinkEntity.modifyCategory(drink.getCategory());
         findDrinkEntity.modifyIsMinimum(drink.isMinimum());
     }
+
+    @Override
+    public void delete(final Drink drink) {
+        drinkEntityRepository.deleteById(drink.getId());
+    }
 }

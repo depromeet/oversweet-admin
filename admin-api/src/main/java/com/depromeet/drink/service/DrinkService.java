@@ -86,6 +86,11 @@ public class DrinkService {
         drinkRepository.modify(findDrink);
     }
 
+    public void deleteDrink(final Long drinkId) {
+        final var findDrink = drinkRepository.findById(drinkId);
+        drinkRepository.delete(findDrink);
+    }
+
     private void validateDuplicatedDrink(final Franchise franchise, final String name) {
         final var findDrink = drinkRepository.findByFranchise(franchise, name);
         if (findDrink.isPresent()) {
