@@ -2,7 +2,6 @@ package com.depromeet.domain.drink.domain;
 
 
 import com.depromeet.common.exception.drink.DrinkImageUrlUpdateNotAllowedException;
-import com.depromeet.common.exception.franchise.FranchiseImageUrlUpdateNotAllowedException;
 import com.depromeet.domain.franchise.domain.Franchise;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -20,9 +19,10 @@ public class Drink {
     private int calorie;
     private String imageUrl;
     private DrinkCategory category;
+    private boolean isMinimum;
 
     @Builder
-    public Drink(final Long id, final String name, final Franchise franchise, final int size, final int sugar, final int calorie, final String imageUrl, final DrinkCategory category) {
+    public Drink(final Long id, final String name, final Franchise franchise, final int size, final int sugar, final int calorie, final String imageUrl, final DrinkCategory category, final boolean isMinimum) {
         this.id = id;
         this.name = name;
         this.franchise = franchise;
@@ -31,6 +31,7 @@ public class Drink {
         this.calorie = calorie;
         this.imageUrl = imageUrl;
         this.category = category;
+        this.isMinimum = isMinimum;
     }
     private void validateImageUrl(final String imageUrl) {
         if (!imageUrl.startsWith("https://oversweet.s3")) {
@@ -38,4 +39,7 @@ public class Drink {
         }
     }
 
+    public void setSugar(final int sugar) {
+        this.sugar = sugar;
+    }
 }

@@ -1,7 +1,6 @@
 package com.depromeet.domain.drink.entity;
 
 import com.depromeet.domain.common.AuditingTimeEntity;
-import com.depromeet.domain.drink.domain.Drink;
 import com.depromeet.domain.drink.domain.DrinkCategory;
 import com.depromeet.domain.franchise.entity.FranchiseEntity;
 import jakarta.persistence.Column;
@@ -54,8 +53,11 @@ public class DrinkEntity extends AuditingTimeEntity {
     @Column(name = "category")
     private DrinkCategory category;
 
+    @Column
+    private boolean isMinimum;
+
     @Builder
-    public DrinkEntity(final Long id, final String name, final FranchiseEntity franchise, final int size, final int sugar, final int calorie, final String imageUrl, final DrinkCategory category) {
+    public DrinkEntity(final Long id, final String name, final FranchiseEntity franchise, final int size, final int sugar, final int calorie, final String imageUrl, final DrinkCategory category, final boolean isMinimum) {
         this.id = id;
         this.name = name;
         this.franchise = franchise;
@@ -64,5 +66,6 @@ public class DrinkEntity extends AuditingTimeEntity {
         this.calorie = calorie;
         this.imageUrl = imageUrl;
         this.category = category;
+        this.isMinimum = isMinimum;
     }
 }

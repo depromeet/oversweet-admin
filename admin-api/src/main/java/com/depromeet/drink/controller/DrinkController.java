@@ -22,10 +22,9 @@ public class DrinkController {
     private final DrinkService drinkService;
 
     @Operation(summary = "음료 생성", description = "음료 생성 API입니다.")
-    @PostMapping("/{franchiseId}")
-    public ResponseEntity<ApiMessageResponse> drinkSave(@PathVariable final Long franchiseId,
-                                                        @RequestBody final CreateDrinkRequest request) {
-        drinkService.saveDrink(franchiseId, request);
+    @PostMapping("/{makerName}/{franchiseId}")
+    public ResponseEntity<ApiMessageResponse> drinkSave(@PathVariable final Long franchiseId, @PathVariable final String makerName) {
+        drinkService.GetDrinkDbData(franchiseId, makerName);
         return ResponseEntity.ok()
                 .body(ApiMessageResponse.of(HttpStatus.OK, "음료 저장 성공"));
     }

@@ -2,8 +2,10 @@ package com.depromeet.drink.external.dto.resposne;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
+@Setter
 public class Row {
     @JsonProperty("NUM")
     public String num;

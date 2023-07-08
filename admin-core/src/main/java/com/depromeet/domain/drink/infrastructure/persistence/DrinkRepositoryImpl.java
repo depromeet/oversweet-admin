@@ -29,6 +29,7 @@ public class DrinkRepositoryImpl implements DrinkRepository {
                 .category(drink.getCategory())
                 .calorie(drink.getCalorie())
                 .franchise(findFranchiseEntity)
+                .isMinimum(drink.isMinimum())
                 .build();
 
         drinkEntityRepository.save(drinkEntity);
